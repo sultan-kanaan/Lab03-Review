@@ -3,29 +3,38 @@ using System.IO;
 
 namespace Review
 {
-    class Program
+   public class Program
     {
         static void Main(string[] args)
         {
-            //Challenge1();
+            Challenge1();
             //Challenge2();
             //Challenge3();
             //Challenge4();
             //Challenge5();
             //Challenge6();
             //Challenge7();
-            Challenge9();
+            //Challenge8();
+            //Challenge9();
 
         }
+        
+       
+        public static void Challenge1()
+        {
+           
+            Console.WriteLine("please enter 3 numbers seperated by space");
+            string input = Console.ReadLine();
+            Console.WriteLine($"The product of these 3 numbers is: {GetProduct(input)}");
 
-        public static int Challenge1()
+        }
+        public static int GetProduct(string input)
         {
             int output;
             int product = 1;
-            Console.WriteLine("please enter 3 numbers seperated by space");
-            string input = Console.ReadLine();
             string[] arr = input.Split(" ");
-
+            if (arr.Length < 3)
+                return 0;
             for (int i = 0; i < 3; i++)
             {
 
@@ -33,11 +42,11 @@ namespace Review
                 product *= output;
 
             }
-            Console.WriteLine($"your numbers : {arr[0]},{arr[1]},{arr[2]}");
-            Console.WriteLine($"The product of these 3 numbers is: {product} ");
 
             return product;
+
         }
+
         public static decimal Challenge2()
         {
             Console.WriteLine("please enter a number between 2-10");
@@ -63,6 +72,15 @@ namespace Review
                 Console.WriteLine($"The average of these numbers is: {average}");
             }
             return average;
+        }
+        public static int GetAverage(int[] arr, int count)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < count; i++)
+                sum += arr[i];
+
+            return sum / count;
         }
 
         public static void Challenge3()
@@ -113,49 +131,54 @@ namespace Review
 
         public static void Challenge4()
         {
-            int[] arr = new int[] { 1, 1, 2, 2, 3, 3, 3, 1, 1, 5, 5, 6, 7, 8, 2, 1, 1 };
-            //int[] arr = new int[] { 1, 2, 3, 4 };
-            //int[] arr = new int[] { 1, 1, 1, 1 };
-            //int[] arr = new int[] { 1, 1, 2, 2, 3, 3 };
+            int[] arr = new int[] { 5, 4, 2, 2, 3, 3, 3, 1, 3, 5, 5, 6, 7, 8, 2, 1, 1 };
 
-            int duplicate = arr[0];
-            int count = 0;
-            int count2 = 0;
-            for (int i = 0; i < arr.Length ; i++)
-            {
-              int test = arr[i];
-                
-              for (int j = 0; j < arr.Length; j++) 
-                {
-                if (test == arr[j])
-                    count++;
-                    if (count > count2)
-                    {
-                        duplicate = test;
-                        count2 = count;
-
-                    }
-                    count = 0;
-                }
-
-            }
-            Console.WriteLine($"The most numbers duplicates is : {duplicate} ist {count} times");
+            Console.WriteLine($"The most numbers duplicates is : {getduplicates(arr)} ");
 
 
         }
-
-        public static void Challenge5()
+        public static int getduplicates(int[] a)
         {
-            int[] arr = new int[] { 120, 1, 90, 55, 140, 3,135 };
-            int max = 0;
+            int count = 1, tempCount;
+            int duplicate = a[0];
+            int temp = 0;
+            for (int i = 0; i < (a.Length - 1); i++)
+            {
+                temp = a[i];
+                tempCount = 0;
+                for (int j = 1; j < a.Length; j++)
+                {
+                    if (temp == a[j])
+                        tempCount++;
+                }
+                if (tempCount > count)
+                {
+                    duplicate = temp;
+                    count = tempCount;
+                }
+            }
+            return duplicate;
+        }
+
+            public static void Challenge5()
+        {
+            int[] arr = new int[] { 120, 1, 90, 55, 140, 3, 135 };
+
+            Console.WriteLine($"The max number in this array is : {GetMaximum(arr)}");
+
+        }
+        public static int GetMaximum(int[] arr) 
+        {
+            int max = arr[0];
             for (int i = 0; i < arr.Length; i++)
             {
                 if (arr[i] > max)
                     max = arr[i];
             }
-            Console.WriteLine($"The max number in this array is : {max}");
+            return max;
+        }            
 
-        }
+
 
         public static void Challenge6()
         {
@@ -187,28 +210,55 @@ namespace Review
                     Console.WriteLine(word);
             }
         }
+        public static void Challenge8()
+        {
+            string path = "../../../words.txt";
 
-        public static void Challenge9() 
+            Console.WriteLine("Please Enter a word to be deleted from 'Words.txt'");
+            string input = Console.ReadLine();
+
+            string[] fileContent = File.ReadAllLines(path);
+
+            string[] words = fileContent[0].Split(" ");
+
+            string newContent = "";
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (words[i] != input)
+                    newContent += words[i] + " ";
+            }
+
+            File.WriteAllText("Words.txt", newContent);
+
+            Console.WriteLine("The new content is");
+            String[] newfileContent = File.ReadAllLines("Words.txt");
+            for (int i = 0; i < newfileContent.Length; i++)
+                Console.WriteLine(newfileContent[i]);
+        }
+
+    
+
+    public static void Challenge9() 
         {
             Console.WriteLine("Enter a sentence to be counted.");
             string input = Console.ReadLine();
+            getword(input);
+        }
+        public static string[] getword(string input) 
+        {
 
             string[] arr = input.Split(" ");
-
             int output;
-            string word;
             for (int i = 0; i < arr.Length; i++)
             {
                 output = arr[i].Length;
 
-                word = $"\" {arr[i]} : {output} \", ";
-
-
-                arr[i] = word;
+                arr[i] = $"\" {arr[i]} : {output} \", ";
                 Console.Write(arr[i]);
             }
+            return arr;
         }
-
+        
     }
 }
 
