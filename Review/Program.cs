@@ -13,7 +13,9 @@ namespace Review
             //Challenge4();
             //Challenge5();
             //Challenge6();
-            Challenge7();
+            //Challenge7();
+            Challenge9();
+
         }
 
         public static int Challenge1()
@@ -186,6 +188,26 @@ namespace Review
             }
         }
 
+        public static void Challenge9() 
+        {
+            Console.WriteLine("Enter a sentence to be counted.");
+            string input = Console.ReadLine();
+
+            string[] arr = input.Split(" ");
+
+            int output;
+            string word;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                output = arr[i].Length;
+
+                word = $"\" {arr[i]} : {output} \", ";
+
+
+                arr[i] = word;
+                Console.Write(arr[i]);
+            }
+        }
 
     }
 }
